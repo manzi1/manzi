@@ -1,0 +1,139 @@
+# cat /usr/local/bin/manzi
+#!/bin/bash
+
+# Define the ASCII art for various gestures
+ascii_art_subtle="( ಠ_ಠ) "
+ascii_art_moderate="┌∩┐(◣_◢)┌∩┐"
+ascii_art_verbal="┌П┐(•̀_•́)┌П┐ - \"You’re really pushing it now.\""
+ascii_art_force="┌П┐(▀̿Ĺ̯▀̿)┌П┐ - No filter, you've crossed the line!"
+ascii_art_default="┌П┐(▀̿Ĺ̯▀̿)"
+ascii_art_shades="┌∩┐(⌐■_■)┌∩┐"
+
+# Help / Man page function
+function show_man_page() {
+    cat <<EOF
+manzi(1)                          Annoyance Manual                          manzi(1)
+
+NAME
+       manzi - Politely inform others that they're asking too much
+
+SYNOPSIS
+       manzi [OPTION]...
+
+DESCRIPTION
+       The manzi utility is used to gracefully handle cases where users
+       are being excessively annoying, demanding, or overstepping boundaries.
+       When executed, it delivers a strongly implied, but socially acceptable,
+       indication that the user should back off.
+
+       Options include varying levels of intensity depending on the severity of
+       the nuisance. Use with caution.
+
+OPTIONS
+       -s, --subtle
+              Show a mild, non-verbal gesture indicating displeasure.
+
+       -m, --moderate
+              Display a clear middle-finger with a raised eyebrow, ensuring the
+              message is understood without further explanation.
+
+       -v, --verbal
+              Verbally reinforce the gesture with a snarky comment, such as
+              “You’re really pushing it now.”
+
+       -r, --repeat
+              Repeatedly delivers the middle-finger response for those who just
+              don’t get the hint the first time.
+
+       -c, --cool-shades
+              Adds cool sunglasses to the gesture for maximum style points.
+
+       --force
+              Bypass polite responses and deliver an unfiltered, unapologetic
+              middle-finger with maximum efficiency.
+
+EXAMPLES
+       RTFM above!
+
+NOTES
+       This utility is designed for lighthearted, humorous situations. Use responsibly.
+       Overuse may result in social awkwardness, loss of friends, or HR meetings.
+
+AUTHOR
+       Developed for the collective frustrations of sysadmins everywhere. Use freely ♥
+
+REPORTING BUGS
+       If the manzi command fails to deliver the desired effect, try using --force
+       or consider a facepalm(1) command instead.
+EOF
+}
+
+# Function to display the middle-finger ASCII art based on options
+function show_ascii_art() {
+    local intensity="default"
+    local shades=false
+    local repeat_count=1
+
+    while [[ "$1" != "" ]]; do
+        case $1 in
+            -s|--subtle)
+                intensity="subtle"
+                ;;
+            -m|--moderate)
+                intensity="moderate"
+                ;;
+            -v|--verbal)
+                intensity="verbal"
+                ;;
+            -r|--repeat)
+                repeat_count=3
+                ;;
+            -c|--cool-shades)
+                shades=true
+                ;;
+            --force)
+                intensity="force"
+                ;;
+            --help|-h|man)
+                show_man_page
+                exit 0
+                ;;
+            *)
+                echo "Unknown option: $1"
+                exit 1
+                ;;
+        esac
+        shift
+    done
+
+    for (( i=0; i<$repeat_count; i++ )); do
+        case $intensity in
+            "subtle")
+                echo "$ascii_art_subtle"
+                ;;
+            "moderate")
+                echo "$ascii_art_moderate"
+                ;;
+            "verbal")
+                echo "$ascii_art_verbal"
+                ;;
+            "force")
+                echo "$ascii_art_force"
+                ;;
+            "default")
+                echo "$ascii_art_default"
+                ;;
+        esac
+        if $shades; then
+            echo "$ascii_art_shades"
+        fi
+    done
+}
+
+# Main script execution
+if [[ "$#" -eq 0 ]]; then
+    echo "Usage: manzi [OPTION]..."
+    echo "Try 'manzi --help' for more information."
+else
+    show_ascii_art "$@"
+fi

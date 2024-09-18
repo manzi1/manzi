@@ -64,7 +64,7 @@ AUTHOR
 
 REPORTING BUGS
        If the manzi command fails to deliver the desired effect, try using --force
-       or consider a facepalm(1) command instead.
+       You could report it here: https://github.com/manzi1/manzi but I will probably ignore you.
 EOF
 }
 
